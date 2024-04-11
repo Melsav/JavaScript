@@ -27,35 +27,45 @@ let searchHistory = [];
 app.post('/register', (req, res) => {
     const { username, email, password } = req.body;
 
-    // Vérification si l'utilisateur existe déjà
-    const existingUser = users.find(user => user.email === email);
-    if (existingUser) {
-        return res.status(400).json({ message: 'Cet utilisateur existe déjà.' });
-    }
-
-    // Création d'un nouvel utilisateur sans hacher le mot de passe
-    const newUser = { username, email, password };
-    users.push(newUser);
-
-    res.status(201).json({ message: 'Utilisateur inscrit avec succès.' });
+    // Insérer les données de l'utilisateur dans la table MySQL
+    pool.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, password], (error, results) => {
+        if (error) {
+            console.error('Erreur lors de l\'inscription de l\'utilisateur:', error);
+            res.status(500).json({ message: 'Erreur lors de l\'inscription de l\'utilisateur' });
+        } else {
+            console.log('Utilisateur inscrit avec succès');
+            res.status(200).json({ message: 'Utilisateur inscrit avec succès' });
+        }
+    });
 });
 
-// Route pour la connexion des utilisateurs
+// Route pour la connexion
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
 
-    // Recherche de l'utilisateur par email
-    const user = users.find(user => user.email === email);
+    // Vérifier si l'utilisateur existe dans la base de données
+    pool.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
+        if (error) {
+            console.error('Erreur lors de la recherche de l\'utilisateur:', error);
+            return res.status(500).json({ message: 'Erreur lors de la connexion.' });
+        }
 
-    // Vérification si l'utilisateur existe et si le mot de passe correspond
-    if (user && user.password === password) {
-        // Utilisateur authentifié avec succès
-        res.status(200).json({ message: 'Connexion réussie.' });
-    } else {
-        // Échec de l'authentification
-        res.status(401).json({ message: 'Email ou mot de passe incorrect.' });
-    }
+        if (results.length === 0) {
+            return res.status(401).json({ message: 'Email ou mot de passe incorrect.' });
+        }
+
+        const user = results[0];
+
+        // Vérifier si le mot de passe correspond
+        if (user.password !== password) {
+            return res.status(401).json({ message: 'Email ou mot de passe incorrect.' });
+        }
+
+        // Authentification réussie, envoyer une réponse avec les détails de l'utilisateur
+        res.status(200).json({ message: 'Connexion réussie.', user: { id: user.id, username: user.username, email: user.email } });
+    });
 });
+
 
 
 
