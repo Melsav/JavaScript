@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widgets Météo Personnalisés</title>
+    <link rel="stylesheet" href="style_soleil.css">
+</head>
+<body>
+    <div id="weather-widgets" class="weather-widgets">
+        <div class="widget" id="paris-weather"></div>
+        <div class="widget" id="new-york-weather"></div>
+        <div class="widget" id="tokyo-weather"></div>
+    </div>
+    <script>
+        const apiKey = 'ae389c751139d10e6c783635a12a3b6e';
+const cities = [
+    { id: 'paris-weather', name: 'Paris' },
+    { id: 'new-york-weather', name: 'New York' },
+    { id: 'tokyo-weather', name: 'Tokyo' }
+];
+
+async function fetchWeatherData(cityName) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=fr`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+    }
+}
+
+function updateWidget(cityId, weatherData) {
+    const widget = document.getElementById(cityId);
+    widget.innerHTML = `
+        <h2>Météo à ${weatherData.name}</h2>
+        <p>Température: ${weatherData.main.temp}°C</p>
+        <p>Condition: ${weatherData.weather[0].description}</p>
+        <p>Humidité: ${weatherData.main.humidity}%</p>
+        <p>Vent: ${weatherData.wind.speed} km/h</p>
+    `;
+}
+
+async function initWidgets() {
+    for (const city of cities) {
+        const weatherData = await fetchWeatherData(city.name);
+        updateWidget(city.id, weatherData);
+    }
+}
+
+initWidgets();
+
+    </script>
+</body>
+</html>

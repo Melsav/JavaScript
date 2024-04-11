@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Compte</title>
+    <link rel="stylesheet" href="style_login.css">
+</head>
+<body>
+    <header>
+        <img id="logo_site" src="LOGOO-removebg-preview.png"/>
+        <nav>
+            <ul class="nav_links">
+                <li><a href="#">Accueil</a></li>
+                <li><a href="../weather/prevision_meteo.html">Prévisions</a></li>
+                <li><a href="../spaces/home.html">Météo Spatiale</a></li>
+                <li><a href="../weather/map.html">Map</a></li>
+                <li><a href="../weather/history.html">Historique</a></li>
+            </ul>
+        </nav>
+        <div class="button-container">
+            <a class="cta_" href="register.html"><button>Register</button></a>
+            <a class="cta" href="login.html"><button>Connexion</button></a>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </header>
+    <main>
+        <section class="signup-form">
+            <div id="message-container"></div>
+            <h2 id="login">Connectez-vous</h2>
+            <form id="login-form">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <button type="submit">Se connecter</button>
+            </form>
+            <p id="not_reg">Pas encore inscrit? <a id="not_reg" href="register.html">S'inscrire</a></p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 MétéoApp. Tous droits réservés.</p>
+    </footer>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = {
+        email: this.email.value,
+        password: this.password.value,
+    };
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Email ou mot de passe incorrect.');
+        }
+    })
+    .then(data => {
+        // Affiche un message de succès et redirige l'utilisateur
+        const messageContainer = document.getElementById('message-container');
+        messageContainer.textContent = 'Connexion réussie. Redirection...';
+        messageContainer.style.color = 'green';
+
+        // Redirection vers la page prévision météo
+        window.location.href = 'prevision_meteo.html';
+    })
+    .catch((error) => {
+        // Affiche un message d'erreur
+        const messageContainer = document.getElementById('message-container');
+        messageContainer.textContent = error.message;
+        messageContainer.style.color = 'red';
+    });
+});
+
+    </script>
+</body>
+</html>

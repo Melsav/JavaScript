@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effet de Neige</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Empêche le défilement vertical */
+            background-color: #87CEFA; /* Couleur de fond par défaut */
+            transition: background-color 1s ease; /* Transition de couleur de fond */
+        }
+
+        #snowflakes-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Les flocons de neige ne sont pas cliquables */
+        }
+
+        .snowflake {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: fall linear infinite;
+            pointer-events: none; /* Les flocons de neige ne sont pas cliquables */
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        #theme-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #1E90FF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="snowflakes-container"></div>
+
+    <button id="theme-button">Neige</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const snowflakesContainer = document.getElementById('snowflakes-container');
+            const themeButton = document.getElementById('theme-button');
+            let isSnowing = false;
+
+            themeButton.addEventListener('click', function () {
+                isSnowing = !isSnowing;
+                document.body.style.backgroundColor = isSnowing ? '#fff' : '#87CEFA'; // Changement de couleur de fond
+                snowflakesContainer.style.display = isSnowing ? 'block' : 'none'; // Affichage/masquage des flocons de neige
+            });
+
+            // Création des flocons de neige
+            for (let i = 0; i < 50; i++) {
+                createSnowflake();
+            }
+
+            function createSnowflake() {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.style.left = `${Math.random() * window.innerWidth}px`;
+                snowflake.style.animationDuration = `${Math.random() * 2 + 1}s`; // Durée de l'animation entre 1s et 3s
+                snowflakesContainer.appendChild(snowflake);
+            }
+        });
+    </script>
+
+</body>
+</html>

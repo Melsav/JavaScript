@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <aside>
+        <nav>
+            <a href="home.html" class="active">Dashboard</a>
+            <a href="picture.html">Pic's</a>
+            <a href="space_news.html">News</a>
+            <a href="exploration.html">Exploration</a>
+            <a href="../authent/login.html">Météo</a>
+        </nav>
+    </aside>
+    <main>
+        <header>
+            <h1>Centre de Commande Spatial</h1>
+        </header>
+        <div class="widget-grid">
+            <div class="card large additional-margin">
+                <h2>Astéroïdes Proches de la Terre Cette Semaine</h2>
+                <canvas id="neosChart"></canvas>
+            </div>
+                      
+            <div class="card">
+                <h2>Suivi des Débris Spatiaux</h2>
+                <canvas id="spaceDebrisChart"></canvas>
+            </div>
+            
+            <div class="card large additional-margin">
+                <h2>Activité Solaire</h2>
+                <canvas id="solarActivity"></canvas>
+            </div>
+            <div class="card">
+                <h2>Phases de la Lune</h2>
+                <canvas id="moonChart"></canvas>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('solarActivity').getContext('2d');
+const solarActivityChart = new Chart(ctx, {
+    type: 'line', 
+    data: {
+        labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'], 
+        datasets: [{
+            label: 'Intensité des éruptions solaires',
+            data: [12, 19, 3, 5, 2, 3, 9], 
+            backgroundColor: 'rgba(255, 99, 132, 0.2)', 
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1 
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+const moonCtx = document.getElementById('moonChart').getContext('2d');
+const moonChart = new Chart(moonCtx, {
+    type: 'bar', 
+    data: {
+        labels: ['Nouvelle Lune', 'Premier Quartier', 'Pleine Lune', 'Dernier Quartier'], // Phases de la lune
+        datasets: [{
+            label: 'Illumination de la Lune (%)',
+            data: [0, 50, 100, 50], 
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+const debrisCtx = document.getElementById('spaceDebrisChart').getContext('2d');
+const spaceDebrisChart = new Chart(debrisCtx, {
+    type: 'doughnut', 
+    data: {
+        labels: ['Satellites fonctionnels', 'Débris', 'Satellites hors service'],
+        datasets: [{
+            label: 'Débris Spatiaux',
+            data: [800, 5000, 2000], 
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(255, 206, 86, 0.6)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Répartition des Objets en Orbite'
+            }
+        }
+    }
+});
+
+const neosCtx = document.getElementById('neosChart').getContext('2d');
+
+
+async function fetchNEOsData() {
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setDate(startDate.getDate() + 7);
+
+    const response = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate.toISOString().split('T')[0]}&end_date=${endDate.toISOString().split('T')[0]}&api_key=GfuMIcGVIbY6avmY0yNAaFTrZIZgeAPqCBnk0KZU`);
+    const data = await response.json();
+
+    const dailyCounts = Object.values(data.near_earth_objects).map(neos => neos.length);
+    const labels = Object.keys(data.near_earth_objects);
+
+    const neosChart = new Chart(neosCtx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Nombre d\'astéroïdes proches de la Terre',
+                data: dailyCounts,
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+fetchNEOsData();
+
+
+
+    </script>
+</body>
+</html>

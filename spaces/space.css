@@ -1,0 +1,85 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0px;
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 98vh;
+    color: white;
+}
+
+#apodImage {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#apodImage img {
+    max-width: 40%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: inline-block;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+button, input[type="date"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 6px;
+    outline: none;
+}
+
+button {
+    background-color: #08d;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#random {
+
+    margin-bottom: 5px;
+}
+
+button:hover {
+    background-color: #06b;
+}
+
+input[type="date"] {
+    background-color: #fff;
+    color: #555;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    #apodImage img {
+        max-width: 80%; /* Plus grande pour les petits écrans */
+    }
+
+    button, input[type="date"] {
+        width: 100%; /* Utilise toute la largeur disponible */
+        margin-top: 10px; /* Ajoute un peu d'espace au-dessus pour la lisibilité */
+    }
+
+    body {
+        padding: 10px; /* Réduit le padding pour maximiser l'espace */
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    #apodImage img {
+        max-width: 60%; /* Taille intermédiaire pour les tablettes */
+    }
+}

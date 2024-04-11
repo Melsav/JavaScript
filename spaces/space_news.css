@@ -1,0 +1,90 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #4f4f4f 0%, #20232a 40%, #1c1e24 100%);
+    color: #fff;
+}
+
+header {
+    background: rgba(0, 0, 0, 0.2);
+    color: #61dafb;
+    padding: 20px 0;
+    text-align: center;
+    position: relative; /* Ajouté pour le positionnement absolu du bouton */
+}
+
+h1 {
+    margin: 0;
+}
+
+section#news h2 {
+    color: #61dafb;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #61dafb;
+    text-align: center;
+}
+
+#articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.article {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: transform 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.article:hover {
+    transform: translateY(-5px);
+}
+
+.article h3 {
+    color: #61dafb;
+    margin-top: 0;
+}
+
+.article p {
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+.article a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #61dafb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.article a:hover {
+    text-decoration: underline;
+}
+
+/* Style pour le bouton de retour au dashboard */
+#dashboardBtn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4a90e2;
+    color: #20232a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#dashboardBtn:hover {
+    background-color: #10325c;
+    transform: scale(1.05);
+}

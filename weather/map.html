@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infos Carte</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #87CEFA;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Empêche le défilement vertical */
+            position: relative; /* Position relative pour positionner les flocons de neige */
+        }
+
+        #map {
+            height: 400px;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #weather-info {
+            margin-top: 20px;
+            padding: 20px;
+            font-size: 18px;
+            background-color: #E6E6FA;
+            color: #1E90FF;
+            border-radius: 10px;
+            text-align: left;
+            display: none;
+        }
+
+        #weather-info strong {
+            font-weight: bold;
+            display: inline-block;
+            width: max-content; /* Ajuste la largeur selon le contenu */
+            margin-bottom: 5px; /* Ajoute une marge inférieure entre chaque ligne */
+        }
+
+        /* Supprime la marge inférieure de la dernière ligne */
+        #weather-info strong:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Styles pour les flocons de neige */
+        .snowflake {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: fall linear infinite;
+            pointer-events: none; /* Les flocons de neige ne sont pas cliquables */
+            top: 0;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <div id="weather-info" class="cadran"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var mymap = L.map('map').setView([0, 0], 2);
+        var snowflakesContainer = document.createElement('div'); // Créer un conteneur pour les flocons de neige
+        snowflakesContainer.id = 'snowflakes-container';
+        document.body.appendChild(snowflakesContainer); // Ajouter le conteneur à la page
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(mymap);
+
+        mymap.on('click', function (e) {
+            var lat = e.latlng.lat;
+            var lon = e.latlng.lng;
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Réponse non valide de l\'API Nominatim');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var locationName = data.address.city || data.address.country; // Choisissez la propriété appropriée
+                    getWeatherData(lat, lon, locationName);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des informations de localisation', error);
+                });
+        });
+
+        function getWeatherData(lat, lon, locationName) {
+            const apiKey = 'ae389c751139d10e6c783635a12a3b6e'; 
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Réponse non valide de l\'API OpenWeatherMap');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayWeatherInfo(data, locationName);
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération des données météorologiques', error);
+                });
+        }
+
+        function displayWeatherInfo(data, locationName) {
+            var weatherInfo = document.getElementById('weather-info');
+            weatherInfo.innerHTML = `
+                <strong>Pays :</strong> ${locationName}<br>
+                <strong>Météo :</strong> ${data.weather[0].description}<br>
+                <strong>Température :</strong> ${data.main.temp} °C<br>
+                <strong>Humidité :</strong> ${data.main.humidity}%<br>
+                <strong>Vitesse du vent :</strong> ${data.wind.speed} m/s
+            `;
+
+            weatherInfo.style.display = 'block';
+
+            // Vérifie si la température est inférieure à 10 degrés Celsius
+            if (data.main.temp < 10) {
+                createSnowfall(); // Lance l'effet de neige
+            }
+        }
+
+        function createSnowfall() {
+    for (let i = 0; i < 50; i++) {
+        createSnowflake();
+    }
+
+    // Arrête la chute de neige après 5 secondes
+    setTimeout(() => {
+        while (snowflakesContainer.firstChild) {
+            snowflakesContainer.removeChild(snowflakesContainer.firstChild);
+        }
+    }, 5000); // 5000 millisecondes = 5 secondes
+}
+
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.style.left = `${Math.random() * window.innerWidth}px`;
+            snowflake.style.animationDuration = `${Math.random() * 2 + 1}s`; // Durée de l'animation entre 1s et 3s
+            snowflakesContainer.appendChild(snowflake);
+        }
+    </script>
+
+</body>
+</html>

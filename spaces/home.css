@@ -1,0 +1,112 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+aside {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Ajoute une ombre pour une séparation visuelle */
+}
+
+aside nav a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+aside nav a.active, aside nav a:hover {
+    background: #444;
+}
+
+main {
+    margin-left: 220px; /* Augmente légèrement pour créer un espace entre aside et main */
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px; /* Ajoute de l'espace sous le header */
+}
+
+header h1 {
+    color: #20232a;
+    margin-top: 0px;
+}
+
+.widget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.additional-margin {
+    margin-left: 20px; /* Ajoute une marge à gauche pour ces cartes spécifiques */
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.additional-margin.large {
+
+    grid-column: span 2;
+
+
+}
+
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card.large {
+    grid-column: span 2;
+}
+
+ul {
+    list-style: inside;
+    padding-left: 0;
+}
+
+canvas {
+    width: 80%;
+    height: 200px;
+}
+
+@media (max-width: 768px) {
+    aside {
+        width: 100%;
+        height: auto;
+        position: relative; /* Change pour adapter le layout sur les petits écrans */
+        box-shadow: none;
+    }
+
+    main {
+        margin-left: 0; /* Supprime le décalage sur les petits écrans */
+    }
+
+    .widget-grid {
+        grid-template-columns: 1fr; /* Adapte le grid pour les petits écrans */
+    }
+}

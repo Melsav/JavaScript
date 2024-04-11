@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_history.css">
+    <title>Historique des recherches</title>
+    
+</head>
+<body>
+    <h1>Historique des recherches</h1>
+
+    <div class="history-container">
+    <ul id="search-history"></ul>
+    </div>
+    
+    <button id="btn_home">Back to Home</button>
+
+    <script>
+     const apiUrl = "http://localhost:3000";
+
+// Récupération de l'historique des recherches depuis le backend
+// Récupération des données météo depuis le backend
+// Récupération des données météo depuis le backend
+fetch(`${apiUrl}/weather/data`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Réponse non valide du backend');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Sélection de l'élément HTML où vous voulez afficher les données météo
+        const searchHistory = document.getElementById('search-history');
+
+        // Itération sur chaque objet météo dans le tableau
+        data.forEach(item => {
+            // Création d'un élément <li> pour afficher les informations météo
+            const listItem = document.createElement('li');
+            // Construction du texte à afficher pour chaque entrée météo
+            const text = `${item.city} : Température ${item.temperature}°C, ${item.description}`;
+            // Attribution du texte à l'élément <li>
+            listItem.textContent = text;
+            // Ajout de l'élément <li> à l'élément où vous voulez afficher les données
+            searchHistory.appendChild(listItem);
+        });
+    })
+    .catch(error => {
+        console.error('Erreur lors de la récupération des données météo:', error);
+    });
+
+
+
+
+
+
+
+            
+    </script>
+</body>
+</html>

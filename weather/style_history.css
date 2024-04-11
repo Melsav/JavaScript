@@ -1,0 +1,89 @@
+body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(76,76,168,1) 19%, rgba(0,212,255,1) 57%, rgba(2,0,36,1) 99%);
+}
+
+h1 {
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+ul#search-history {
+    list-style: none;
+    padding: 0;
+    width: 500px;
+
+}
+
+/* Style pour les éléments de liste */
+
+
+
+ul#search-history li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+ul#search-history li:hover {
+    background-color: #f9f9f9;
+}
+
+
+
+/* Style pour le conteneur de l'historique */
+.history-container {
+    width: 550px; /* Largeur du conteneur */
+    max-height: 400px; /* Hauteur maximale du conteneur */
+    margin: 0 auto; /* Centrage horizontal */
+    overflow-y: auto; /* Ajoute un défilement vertical lorsque nécessaire */
+    border: 1px solid #ccc; /* Bordure pour délimiter le cadre */
+    border-radius: 10px;
+    padding: 10px; /* Espacement intérieur */
+    display: flex; /* Utilisation de flexbox pour centrer horizontalement */
+    justify-content: center; /* Centrage horizontal */
+    background: linear-gradient(135deg, #8A2BE2, #6A5ACD);
+    margin-bottom: 15px;
+}
+
+
+/* Style pour les éléments de liste alternant entre bleu clair et violet clair */
+#search-history li:nth-child(even) {
+    background-color: #94c7e5; /* Bleu clair */
+}
+
+#search-history li:nth-child(odd) {
+    background-color: #9191c9; /* Violet clair */
+}
+
+#btn_home {
+
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #22384f; /* Couleur de fond */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animation de transition */
+}
+
+#btn_home:hover {
+    background-color: #621473; /* Changement de couleur au survol */
+}
+
+

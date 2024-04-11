@@ -1,0 +1,154 @@
+/* Reset de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%; /* Assurez-vous que l'élément html prend toute la hauteur */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; /* Le body prend au moins toute la hauteur de la fenêtre du navigateur */
+    background-image: url('background.jpg'); /* Remplacer 'background.jpg' par l'image de votre choix */
+    background-size: cover;
+    background-position: center;
+    background: linear-gradient(to bottom, #007FFF 0%, #00BFFF 100%);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 74px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.nav_links {
+    list-style: none;
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+    color: #333;
+    text-decoration: none;
+    margin: 15px;
+}
+
+.nav_links li a:hover {
+    color: #017cff;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    gap: 28px; /* Espacement entre les boutons */
+}
+
+.cta_ button {
+    padding: 9px 25px;
+    background-color: rgba(1, 124, 255, 0.75);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.cta button {
+    padding: 9px 25px;
+    background-color: rgba(1, 124, 255, 0.75);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.cta button:hover {
+    background-color: rgba(1, 124, 255, 1);
+}
+
+.signup-form {
+    background-color: rgba(255, 255, 255, 0.8);
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 60px;
+}
+
+.signup-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.signup-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-form input {
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.signup-form button {
+    background-color: #017cff;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.signup-form button:hover {
+    background-color: #0056b3;
+}
+
+main {
+    flex: 1; /* Cela permet à l'élément main de se développer et d'occuper l'espace disponible */
+    padding-bottom: 60px; /* Ajustez cette valeur pour correspondre à la hauteur de votre footer si elle est fixe */
+}
+
+footer {
+    text-align: center;
+    padding: 30px 0; /* Vertical padding set explicitly */
+    background-color: cyan;
+    position: relative; /* Ou 'fixed', si le footer doit rester visible à tout moment */
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    width: 100%;
+    min-height: 80px; /* Hauteur minimale du footer pour augmenter sa taille */
+}
+
+#not_reg {
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 15px;
+}
+
+#logo_site {
+    width: 100px;
+    height: 80px;
+    margin-left: 15px;
+}
+
+#message-container {
+
+    font-weight: bold;
+    text-align: center;
+
+}

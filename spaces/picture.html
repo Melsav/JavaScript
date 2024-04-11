@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="space.css">
+    <title>Beauté de l'univers</title>
+</head>
+<body>
+    <h1>Images de la galaxie</h1>
+    <div id="apodImage">
+    </div>
+    <div id="controls">
+        <input type="date" id="datePicker">
+        <button id="random" onclick="fetchRandomAPOD()">Random Picture</button>
+        <button onclick="goToHomePage()">Home</button>
+    </div>
+
+    <script>
+        const apiKey = "GfuMIcGVIbY6avmY0yNAaFTrZIZgeAPqCBnk0KZU";
+
+        async function fetchAPOD(date = '') {
+            let url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+            if (date) url += `&date=${date}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                document.getElementById('apodImage').innerHTML = `<img src="${data.url}" alt="APOD Image">`;
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function fetchRandomAPOD() {
+            const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=1`;
+            try {
+                const response = await fetch(url);
+                const [data] = await response.json();
+                document.getElementById('apodImage').innerHTML = `<img src="${data.url}" alt="APOD Image">`;
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        document.getElementById('datePicker').addEventListener('change', (event) => {
+            fetchAPOD(event.target.value);
+        });
+
+       
+        fetchAPOD();
+
+        function goToHomePage() {
+        window.location.href = 'home.html'; 
+    }
+    </script>
+</body>
+</html>

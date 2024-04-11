@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualités Spatiales</title>
+    <link rel="stylesheet" href="space_news.css"> <!-- Assurez-vous que ce fichier contient les styles nécessaires -->
+</head>
+<body>
+    <header>
+        <h1>Actualités Spatiales</h1>
+        <button id="dashboardBtn" onclick="window.location.href='home.html';">Dashboard</button>
+    </header>
+    <section id="news">
+        <h2>Dernières Nouvelles</h2>
+        <div id="articles">
+            
+        </div>
+    </section>
+
+    <script>
+        
+        
+        async function fetchSpaceNews() {                                                
+            const apiKey = 'VotreCléAPI'; 
+            const url = `https://api.spaceflightnewsapi.net/v3/articles?_limit=5`; 
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                const articlesContainer = document.getElementById('articles');
+                articlesContainer.innerHTML = ''; 
+
+                data.forEach(article => {
+                    const articleElem = document.createElement('div');
+                    articleElem.classList.add('article');
+                    articleElem.innerHTML = `
+                        <h3>${article.title}</h3>
+                        <p>${article.summary}</p>
+                        <a href="${article.url}" target="_blank">Lire la suite</a>
+                    `;
+                    articlesContainer.appendChild(articleElem);
+                });
+            } catch (error) {
+                console.error("Erreur lors de la récupération des nouvelles spatiales:", error);
+            }
+        }
+
+        
+        fetchSpaceNews();
+    </script>
+</body>
+</html>
