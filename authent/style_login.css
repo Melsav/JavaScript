@@ -1,4 +1,3 @@
-/* Reset de base */
 * {
     margin: 0;
     padding: 0;
@@ -6,15 +5,15 @@
 }
 
 html {
-    height: 100%; /* Assurez-vous que l'élément html prend toute la hauteur */
+    height: 100%; 
 }
 
 body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    min-height: 100%; /* Le body prend au moins toute la hauteur de la fenêtre du navigateur */
-    background-image: url('background.jpg'); /* Remplacer 'background.jpg' par l'image de votre choix */
+    min-height: 100%;
+    background-image: url('background.jpg'); 
     background-size: cover;
     background-position: center;
     background: linear-gradient(to bottom, #007FFF 0%, #00BFFF 100%);

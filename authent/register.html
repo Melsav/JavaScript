@@ -46,14 +46,14 @@
         </section>
         <script>
             document.getElementById('signup-form').onsubmit = function(event) {
-    event.preventDefault(); // Empêcher la soumission du formulaire par défaut
+            event.preventDefault(); 
 
     var form = event.target;
     var password = form.password.value;
     var confirmPassword = form.confirmPassword.value;
     var messageContainer = document.getElementById('message-container');
 
-    // Efface le message précédent s'il existe
+    
     messageContainer.innerHTML = '';
 
     if (password !== confirmPassword) {
@@ -61,15 +61,15 @@
         return false;
     }
 
-    // Préparation des données à envoyer
+    
     var formData = {
         username: form.username.value,
         email: form.email.value,
-        password: password, // Normalement, vous ne voudriez pas envoyer ceci en clair !
+        password: password, 
     };
 
-    // API
-    const apiUrl = "http://localhost:3000"
+    
+    const apiUrl = "http://localhost:3000";
 
     // Utiliser fetch pour envoyer les données au serveur
     fetch(`${apiUrl}/register`, {
@@ -85,6 +85,7 @@
         // Afficher un message de succès dans le conteneur prévu à cet effet
         messageContainer.innerHTML = '<p style="color: green;">Utilisateur inscrit avec succès.</p>';
         form.reset(); // Réinitialiser les champs du formulaire
+        window.location.href = "login.html";
         
     })
     .catch((error) => {
@@ -92,6 +93,7 @@
         messageContainer.innerHTML = '<p style="color: red;">Une erreur est survenue lors de l\'inscription.</p>';
     });
 };
+
 
 
 

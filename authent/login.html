@@ -44,6 +44,7 @@
         <p>&copy; 2024 MétéoApp. Tous droits réservés.</p>
     </footer>
     <script>
+        
         document.getElementById('login-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -52,7 +53,9 @@
         password: this.password.value,
     };
 
-    fetch('/login', {
+    const apiUrl = "http://localhost:3000";
+
+    fetch(`${apiUrl}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -72,8 +75,10 @@
         messageContainer.textContent = 'Connexion réussie. Redirection...';
         messageContainer.style.color = 'green';
 
-        // Redirection vers la page prévision météo
-        window.location.href = 'prevision_meteo.html';
+        // Redirection vers la page prévision météo après 2 secondes
+        setTimeout(() => {
+            window.location.href = '../weather/prevision_meteo.html';
+        }, 1500);
     })
     .catch((error) => {
         // Affiche un message d'erreur
